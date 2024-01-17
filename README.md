@@ -2,7 +2,7 @@
 
 ## Elevator Pitch
 
-Have dozens of climbing trips that have never made it out of the group chat? ClimbCoord is your ultimate companion for seamless climbing adventures! ClimbCoord is a group calendering platform designed for passionate climbers to effortlessly plan their next ascent and join other's trips. Connect with fellow climbers, coordinate gear, and assess skill levels with ease. Whether you're a novice or a seasoned pro, our platform empowers you to meet new climbers and make your climbing goals a reality! Elevate your climbing experience with ClimbCoord – Where planning meets precision, and summits become memories!"
+Have dozens of climbing trips that have never made it out of the group chat? ClimbCoord is your new ultimate companion for seamless climbing adventures! ClimbCoord is a group calendering platform designed for passionate climbers to effortlessly plan their next ascent and join other's trips. Connect with fellow climbers, coordinate gear, and assess skill levels with ease. Whether you're a novice or a seasoned pro, our platform empowers you to meet new climbers and make your climbing goals a reality! Elevate your climbing experience with ClimbCoord – Where planning meets precision, and summits become memories!"
 
 ## Key Features
 - Secure login over HTTPS
