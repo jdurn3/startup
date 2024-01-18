@@ -6,27 +6,39 @@ Have dozens of climbing trips that have never made it out of the group chat? Cli
 
 ## Design 
 ![Main Calendar Page](Images/page_design.jpg)
+
+A diagram demonstrating how the server and backend would interact.
 ![A diagram demonstrating how the server and backend would interact.](Images/server_design.jpg)
+
 
 ## Key Features
 - Secure login over HTTPS
-- Group Calendar listing trips of connected friends. 
-- A place to sign up for other's trips. 
+- A group calendar listing trips of connected friends. 
 - A general description of each trip. 
 - Listed details such as date, location, gear needed, number of people, and climb difficulty. 
+- Ability to submit and delete trips. 
+
+
 
 
 ## Technologies
+
 I am going to use the required technologies in the following ways.
 
 **HTML** - Implements proper HTML structure for the application with two distinct pages – one dedicated to login and the other for submitting and viewing climbing trips. Includes hyperlinks for navigating between selected artifacts. Would display a calender view to make it easy for users to view. 
+
 **CSS** - Employed to create a visually appealing and responsive interface, ensuring an immersive and user-friendly experience for climbers. 
+
 **JavaScript** - Provides login, retirives details of trips, submits the trips, displays other scheduled trips, backend endpoint calls.
+
 **Service** - Backend service with endpoints for:
-login
-retrieving location, dates, number of people, difficulty, amd needed gear
-submitting trips
-retrieving trips 
+- login
+- retrieving location, dates, number of people, difficulty, amd needed gear
+- submitting trips
+- retrieving trips 
+
 **DB/Login** - Store users and trip data in database. Register and login users by storing credentials securely in database. Can't plan a trip unless authenticated.
+
 **WebSocket** - When a trip is submitted, it is visible to other users.
+
 **React** - The application has been adapted to utilize the React web framework.
