@@ -42,3 +42,16 @@ I am going to use the required technologies in the following ways.
 **WebSocket** - When a trip is submitted, it is visible to other users.
 
 **React** - The application has been adapted to utilize the React web framework.
+
+
+<hr> 
+
+# HTML Deliverable
+For this deliverable I built out the structure of my application using HTML.
+
+HTML pages - Three HTML pages that represent the ability to login, sumbit/view trips, and chat with other climbers. 
+Links - The login page automatically links to the other two pages.
+Text - Texts describing the calendar and input options are present. 
+Images - There are two images representing the structure of the messaging and calendar system. 
+DB/Login - Input box and submit button for login. There is a submission form for the details of the trip. The calendar represents the data that will be shown from the databased containing the information received from the submission form. 
+WebSocket - The chat feature represents the real time ability to chat with other climbers.
