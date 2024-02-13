@@ -55,3 +55,14 @@ For this deliverable I built out the structure of my application using HTML.
 - Images:  There are two images representing the structure of the messaging and calendar system. 
 - DB/Login:  Input box and submit button for login. There is a submission form for the details of the trip. The calendar represents the data that will be shown from the databased containing the information received from the submission form. 
 - WebSocket: The chat feature represents the real time ability to chat with other climbers.
+
+<hr> 
+
+## CSS Deliverable 
+For this deliverable I properly styled the application into its final appearance.
+
+- Header, footer, and main content body: made aeach element consistent across pages and appear appealing to the user. 
+- Navigation elements: designed a consistent nav bar that doesn't have the underlined word for the link. 
+- Responsive to window resizing: The app looks great on different window sizes and devices. 
+- Application elements - Used appealing colors that matched the outdoor aesthetic of rock climbing. 
+- Application text content: Changed the fonts and size to emphasize key words. 
