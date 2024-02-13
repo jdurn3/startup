@@ -61,8 +61,8 @@ For this deliverable I built out the structure of my application using HTML.
 ## CSS Deliverable 
 For this deliverable I properly styled the application into its final appearance.
 
-- Header, footer, and main content body: made aeach element consistent across pages and appear appealing to the user. 
-- Navigation elements: designed a consistent nav bar that doesn't have the underlined word for the link. 
+- Header, footer, and main content body: Made aeach element consistent across pages and appear appealing to the user. 
+- Navigation elements: Designed a consistent nav bar that doesn't have the underlined word for the links. 
 - Responsive to window resizing: The app looks great on different window sizes and devices. 
 - Application elements - Used appealing colors that matched the outdoor aesthetic of rock climbing. 
 - Application text content: Changed the fonts and size to emphasize key words. 
