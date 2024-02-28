@@ -26,6 +26,13 @@
             padding: 10px;
             width: 100%;
             box-sizing: border-box;
+            position: relative;
+        }
+
+        .example-user {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
         }
 
         .nav {
@@ -103,7 +110,6 @@
         .fc-title {
             color: #3E2723 !important;
         } 
-
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -120,6 +126,9 @@
             <li><a href="calendar.html">Calendar</a></li>
             <li><a href="chat.html">Chat</a></li>
         </ul>
+        <div class="example-user">
+            <p>User: <span id="displayedUser"></span></p>
+        </div>
     </nav>
 </header>
 
@@ -156,6 +165,14 @@
     <p>Author: Jacqui Durney</p>
     <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
 </footer>
+
+<script>
+    // Retrieve user from local storage on page load
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+        document.getElementById('displayedUser').innerText = storedUser;
+    }
+</script>
 
 <script>
     $(document).ready(function () {

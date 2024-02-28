@@ -30,7 +30,6 @@
             position: absolute;
             bottom: 5px;
             right: 10px;
-            color: hsl(30, 50%, 1%);
         }
 
         .nav {
@@ -132,7 +131,7 @@
                 <li><a href="chat.html">Chat</a></li>
             </ul>
             <div class="example-user">
-                <p>ExampleUser</p>
+                <p>User: <span id="displayedUser"></span></p>
             </div>
         </nav>
     </header>
@@ -141,7 +140,7 @@
         <section class="section">
             <h1>Welcome!</h1>
             <p>Please login to see upcoming trips!</p>
-            <form action="welcome.html" method="post" class="form">
+            <form action="welcome.html" method="post" class="form" id="loginForm">
                 <label for="username" class="label">Enter your name:</label>
                 <input type="text" id="username" name="username" required class="input">
                 <button type="submit" class="button">Login</button>
@@ -155,10 +154,21 @@
     </footer>
 
     <script>
-        document.querySelector('.form').addEventListener('submit', function (event) {
+        // Retrieve user from local storage on page load
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            document.getElementById('displayedUser').innerText = storedUser;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
-            document.querySelector('.example-user p').innerText = `${username}`;
+
+            // Store user in local storage
+            localStorage.setItem('user', username);
+
+            // Display user
+            document.getElementById('displayedUser').innerText = username;
         });
     </script>
 </body>
