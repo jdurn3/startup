@@ -23,6 +23,14 @@
             padding: 10px;
             width: 100%;
             box-sizing: border-box;
+            position: relative;
+        }
+
+        .example-user {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            color: hsl(30, 50%, 1%);
         }
 
         .nav {
@@ -111,17 +119,6 @@
             color: #fff;
             text-decoration: none;
         }
-
-        #userSection {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            text-align: right;
-        }
-
-        #userSection p {
-            margin: 0;
-        }
     </style>
 </head>
 
@@ -134,6 +131,9 @@
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="chat.html">Chat</a></li>
             </ul>
+            <div class="example-user">
+                <p>ExampleUser</p>
+            </div>
         </nav>
     </header>
 
@@ -147,10 +147,6 @@
                 <button type="submit" class="button">Login</button>
             </form>
         </section>
-
-        <section id="userSection" class="section">
-            <p id="displayedUser"></p>
-        </section>
     </main>
 
     <footer class="footer">
@@ -159,14 +155,11 @@
     </footer>
 
     <script>
-        function insertExampleUser() {
-            const exampleUser = "ExampleUser";
-            document.getElementById('username').value = exampleUser;
-            document.getElementById('displayedUser').innerText = `User: ${exampleUser}`;
-        }
-
-        // Call the function when the page loads
-        insertExampleUser();
+        document.querySelector('.form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            document.querySelector('.example-user p').innerText = `${username}`;
+        });
     </script>
 </body>
 </html>
