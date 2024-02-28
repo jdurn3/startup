@@ -111,6 +111,16 @@
             color: #fff;
             text-decoration: none;
         }
+
+        #userSection {
+            margin-top: 20px;
+            text-align: right;
+            margin-right: 20px;
+        }
+
+        #userSection p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -136,11 +146,23 @@
                 <button type="submit" class="button">Login</button>
             </form>
         </section>
+
+        <section id="userSection" class="section">
+            <p id="displayedUser"></p>
+        </section>
     </main>
 
     <footer class="footer">
         <p>Author: Jacqui Durney</p>
         <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
     </footer>
+
+    <script>
+        document.querySelector('.form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            document.getElementById('displayedUser').innerText = `User: ${username}`;
+        });
+    </script>
 </body>
 </html>

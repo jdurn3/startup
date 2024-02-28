@@ -1,199 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ClimbCoord</title>
-        <style>
-            body {
-                font-family: 'Arial', sans-serif;
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimbCoord</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-            h1 {
-                font-family:"Helvetica"
-            }
+        h1, h2 {
+            font-family: "Helvetica";
+        }
 
-            h2 {
-                font-family:"Helvetica"
-            }
-    
-            .header {
-                background-color: #e5c99f;
-                color: #fff;
-                text-align: left;
-                padding: 10px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-    
-            .nav {
-                width: 100%;
-                box-sizing: border-box;
-                background-color: #78530e;
-            }
-    
-            .nav h1 {
-                margin-right: auto;
-                font-size: 50px; 
-            }
-    
-            .nav ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                background-color: #e5c99f;
-                padding: 10px;
-                flex-wrap: wrap; 
-                justify-content: center; 
-            }
-    
-            .nav ul li {
-                margin: 0 10px; 
-            }
-    
-            .nav ul li a {
-                text-decoration: none;
-                color: #ffffff;
-                font-size: 17px; 
-            }
-    
-            .main {
-                padding: 20px;
-                width: 100%;
-                box-sizing: border-box;
-                background-color: #FDF8E3;
-            }
-    
-            .section {
-                text-align: center;
-            }
-    
-            .form {
-                margin-top: 20px;
-            }
-    
-            .label {
-                display: block;
-                margin-bottom: 10px;
-                font-weight: bold;
-            }
-    
-            .input {
-                width: 100%; 
-                padding: 10px;
-                margin-bottom: 15px;
-                box-sizing: border-box;
-            }
-    
-            .button {
-                background-color: #78530e;
-                color: #fff;
-                padding: 10px 20px;
-                border: none;
-                cursor: pointer;
-            }
-    
-            .footer {
-                background-color: #e5c99f;
-                color: #fff;
-                text-align: left;
-                padding: 20px;
-                width: 100%;
-                box-sizing: border-box;
-            }
-    
-            .footer a {
-                color: #fff;
-                text-decoration: none;
-            }
+        .header {
+            background-color: #e5c99f;
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-            .form-container {
-                border: 2px solid #78530e;
-                padding: 20px;
-                border-radius: 10px;
-                box-sizing: border-box;
-                width: 80%;
-            }
-        </style>
-    </head>
+        .nav {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #78530e;
+        }
+
+        .nav h1 {
+            margin-right: auto;
+            font-size: 50px;
+        }
+
+        .nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            background-color: #e5c99f;
+            padding: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav ul li {
+            margin: 0 10px;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 17px;
+        }
+
+        .main {
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #FDF8E3;
+        }
+
+        .form-container {
+            border: 2px solid #78530e;
+            padding: 20px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            width: 80%;
+        }
+        .footer {
+            background-color: #e5c99f;
+            color: #fff;
+            text-align: left;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #calendar {
+            height: 100%;
+            background-color: #FDF8E3;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .fc-event {
+            border: none !important;
+        }
+
+        .fc-title {
+            color: #3E2723 !important;
+        } 
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+</head>
 
 <body>
-    <header class="header">
-        <nav class="nav">
-            <ul>
-                <h1>ClimbCoord</h1>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="chat.html">Chat</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="header">
+    <nav class="nav">
+        <ul>
+            <h1>ClimbCoord</h1>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="chat.html">Chat</a></li>
+        </ul>
+    </nav>
+</header>
 
-    <main class="main">
-        <h1> Upcoming Trips</h1>
-        <p>User: Jacqui</p>
-        <p> (trips will be displayed on calender) </p>
-        <img src="https://www.homemade-gifts-made-easy.com/image-files/blank-calendar-simple-6-rows-600x464.png" alt="Calendar Image">
-        
-        <section class = form-container>
-            <h2>Submit a Trip!</h2>
-    
-            <form action="submit_trip.php" method="post">
-                <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required><br>
-    
-                <label for="people">Number of People:</label>
-                <input type="number" id="people" name="people" min="1" required><br>
-    
-                <label for="location">Location:</label>
-                <input type="text" id="location" name="location" required><br>
-    
-                <label for="difficulty">Difficulty:</label>
-                <select id="difficulty" name="difficulty" required>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select><br>
-    
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-    
-    <footer class="footer">
-        <p>Author: Jacqui Durney</p>
-        <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
-    </footer>
+<main class="main">
+    <h1> Upcoming Trips</h1>
+    <div id="calendar"></div>
 
+    <section class="form-container">
+        <h2>Submit a Trip!</h2>
 
-    <script>
-        function generateMockData() {
+        <form action="submit_trip.php" method="post" id="tripForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+
+            <label for="people">Number of People:</label>
+            <input type="number" id="people" name="people" min="1" required><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br>
+
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>Author: Jacqui Durney</p>
+    <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
+</footer>
+
+<script>
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            defaultView: 'month',
+            eventLimit: true,
+            events: []
+        });
+
+        function getRandomDate() {
             const currentDate = new Date();
-            const randomDate = new Date(currentDate.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000);
+            const endDate = new Date();
+            endDate.setDate(currentDate.getDate() + 30);
+
+            const randomTimestamp = currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime());
+            const randomDate = new Date(randomTimestamp);
             const formattedDate = randomDate.toISOString().split('T')[0];
 
-            const randomPeople = Math.floor(Math.random() * 10) + 1;
-
-            const locations = ['Mountain A', 'Crag B', 'Canyon C'];
-
-            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-
-            const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
-
-            const randomDifficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
-
-            document.getElementById('date').value = formattedDate;
-            document.getElementById('people').value = randomPeople;
-            document.getElementById('location').value = randomLocation;
-            document.getElementById('difficulty').value = randomDifficulty;
+            return formattedDate;
         }
-    </script>
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getRandomLocation() {
+            const locations = ['Mountain A', 'Climbing Spot B', 'Hiking Trail C'];
+            return locations[Math.floor(Math.random() * locations.length)];
+        }
+
+        function getRandomDifficulty() {
+            const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
+            return difficulties[Math.floor(Math.random() * difficulties.length)];
+        }
+
+        function generateAndDisplayMockData() {
+            const formattedDate = getRandomDate();
+            const randomPeople = getRandomNumber(1, 10);
+            const randomLocation = getRandomLocation();
+            const randomDifficulty = getRandomDifficulty();
+            const user = 'exampleUser';
+            const event = {
+                title: `User: ${user}\nLocation: ${randomLocation}\nDifficulty: ${randomDifficulty}\nPeople: ${randomPeople}`,
+                start: formattedDate,
+                end: formattedDate,
+                allDay: true,
+                backgroundColor: '#D2B48C',
+            };
+
+            $('#calendar').fullCalendar('renderEvent', event, true);
+        }
+        setInterval(function () {
+            generateAndDisplayMockData();
+        }, 10000);
+    });
+</script>
+
 </body>
 </html>
