@@ -14,6 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
         }
 
         .header {
@@ -23,6 +24,14 @@
             padding: 10px;
             width: 100%;
             box-sizing: border-box;
+            position: relative;
+        }
+
+        .example-user {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            color: black;
         }
 
         .nav {
@@ -62,33 +71,68 @@
             width: 100%;
             box-sizing: border-box;
             background-color: #FDF8E3;
+            flex-grow: 1; /* Allow the main content to grow and fill available space */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
-        .main p {
-            font-family: 'Helvetica';
-            font-weight: bold;
-            font-size: 20px;
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px;
+            align-items: flex-start; /* Align chat to the left */
         }
 
-        .section {
-            text-align: center;
+        .chat-message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            width: 80%;
+        }
+
+        .user-message {
+            background-color: #DCF8C6;
+            align-self: flex-end;
+        }
+
+        .other-user-message {
+            background-color: #C2DFFF;
+            align-self: flex-start;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #e5c99f;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #ffffff;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         .form {
-            margin-top: 20px;
-        }
-
-        .label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
 
         .input {
-            width: 50%;
+            width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
             box-sizing: border-box;
+            margin-bottom: 10px;
         }
 
         .button {
@@ -124,25 +168,101 @@
                 <li><a href="calendar.html">Calendar</a></li>
                 <li><a href="chat.html">Chat</a></li>
             </ul>
+            <div class="example-user">
+                <p>User: <span id="displayedUser"></span></p>
+            </div>
         </nav>
     </header>
 
     <main class='main'>
-        <p>
-            Chat with new climbing partners!
-        </p>
-        <p>
-            (There will be a call to a third-party service (Mountain Project) to send links to specific routes in the chat feature.)
-        </p>
-        <img src='https://www.scaler.com/topics/images/anatomy-of-a-chat-interface.webp' alt='chat' width='600' height='600'>
+        <div class="sidebar" id="sidebar">
+            <a href="#" onclick="changeConversation(0)">Conversation 1</a>
+            <a href="#" onclick="changeConversation(1)">Conversation 2</a>
+            <a href="#" onclick="changeConversation(2)">Conversation 3</a>
+        </div>
+        <div class="chat-container" id="chatContainer">
+            <!-- Chat messages will be dynamically added here -->
+        </div>
+        <div class="form">
+            <input type="text" id="message" name="message" class="input" placeholder="Start Chat...">
+            <button onclick="sendMessage()" class="button">Send</button>
+        </div>
         <script>
-            let chat = 'Carpe diem';
-            setInterval(() => {
-                chat = `${chat} lorum ipsum`;
-                document.querySelector('#chat-response').textContent = chat;
-            }, 5000);
+            // Retrieve user from local storage on page load
+            const storedUser = localStorage.getItem('user');
+            if (storedUser) {
+                document.getElementById('displayedUser').innerText = storedUser;
+            }
+
+            // Predefined conversation loop
+            const conversations = [
+                [
+                    { user: 'User', message: 'Hi there!' },
+                    { user: 'Other User', message: 'Hello! How are you?' },
+                    { user: 'User', message: 'I\'m good, thanks. How about you?' },
+                    { user: 'Other User', message: 'I\'m doing well too.' },
+                    // Add more messages as needed
+                ],
+                [
+                    // Conversation 2 messages
+                ],
+                [
+                    // Conversation 3 messages
+                ]
+                // Add more conversations as needed
+            ];
+
+            let currentConversationIndex = 0;
+
+            function changeConversation(index) {
+                currentConversationIndex = index;
+                updateSidebar();
+            }
+
+            function updateSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const conversationsCount = conversations.length;
+
+                sidebar.innerHTML = '';
+                for (let i = 0; i < conversationsCount; i++) {
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = `Conversation ${i + 1}`;
+                    link.onclick = () => changeConversation(i);
+                    sidebar.appendChild(link);
+                }
+            }
+
+            function renderMessages() {
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.innerHTML = '';
+
+                const conversation = conversations[currentConversationIndex];
+                conversation.forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `chat-message ${msg.user === storedUser ? 'user-message' : 'other-user-message'}`;
+                    messageDiv.textContent = `${msg.user}: ${msg.message}`;
+                    chatContainer.appendChild(messageDiv);
+                });
+            }
+
+            function sendMessage() {
+                const messageInput = document.getElementById('message');
+                const messageText = messageInput.value.trim();
+
+                if (messageText !== '') {
+                    const conversation = conversations[currentConversationIndex];
+                    conversation.push({ user: storedUser, message: messageText });
+
+                    renderMessages();
+                    messageInput.value = ''; // Clear the input
+                }
+            }
+
+            // Initial rendering
+            updateSidebar();
+            renderMessages();
         </script>
-        <div id="chat-response"></div>
     </main>
 
     <footer class="footer">
