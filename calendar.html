@@ -171,5 +171,29 @@
         <p>Author: Jacqui Durney</p>
         <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
     </footer>
+
+
+    <script>
+        function generateMockData() {
+            const currentDate = new Date();
+            const randomDate = new Date(currentDate.getTime() + Math.random() * 30 * 24 * 60 * 60 * 1000);
+            const formattedDate = randomDate.toISOString().split('T')[0];
+
+            const randomPeople = Math.floor(Math.random() * 10) + 1;
+
+            const locations = ['Mountain A', 'Crag B', 'Canyon C'];
+
+            const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+
+            const difficulties = ['Beginner', 'Intermediate', 'Advanced'];
+
+            const randomDifficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
+
+            document.getElementById('date').value = formattedDate;
+            document.getElementById('people').value = randomPeople;
+            document.getElementById('location').value = randomLocation;
+            document.getElementById('difficulty').value = randomDifficulty;
+        }
+    </script>
 </body>
 </html>
