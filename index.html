@@ -113,9 +113,10 @@
         }
 
         #userSection {
-            margin-top: 20px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
             text-align: right;
-            margin-right: 20px;
         }
 
         #userSection p {
@@ -158,11 +159,14 @@
     </footer>
 
     <script>
-        document.querySelector('.form').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            document.getElementById('displayedUser').innerText = `User: ${username}`;
-        });
+        function insertExampleUser() {
+            const exampleUser = "ExampleUser";
+            document.getElementById('username').value = exampleUser;
+            document.getElementById('displayedUser').innerText = `User: ${exampleUser}`;
+        }
+
+        // Call the function when the page loads
+        insertExampleUser();
     </script>
 </body>
 </html>
