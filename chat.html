@@ -14,7 +14,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
+            min-height: 100vh;
         }
 
         .header {
@@ -29,7 +29,7 @@
 
         .example-user {
             position: absolute;
-            top: 5px;
+            bottom: 5px;
             right: 10px;
             color: black;
         }
@@ -71,36 +71,9 @@
             width: 100%;
             box-sizing: border-box;
             background-color: #FDF8E3;
-            flex-grow: 1; /* Allow the main content to grow and fill available space */
+            flex-grow: 1;
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
-        }
-
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            max-width: 400px;
-            width: 100%;
-            margin: 20px;
-            align-items: flex-start; /* Align chat to the left */
-        }
-
-        .chat-message {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 10px;
-            width: 80%;
-        }
-
-        .user-message {
-            background-color: #DCF8C6;
-            align-self: flex-end;
-        }
-
-        .other-user-message {
-            background-color: #C2DFFF;
-            align-self: flex-start;
         }
 
         .sidebar {
@@ -110,6 +83,7 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0; /* Don't allow sidebar to shrink */
         }
 
         .sidebar a {
@@ -121,26 +95,58 @@
             cursor: pointer;
         }
 
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px;
+        }
+
+        .chat-message {
+            padding: 10px;
+            margin: 5px;
+            border-radius: 10px;
+            width: 80%;
+        }
+
+        .user-message {
+            background-color: #D2B48C;
+            align-self: flex-end;
+            color: #fff;
+            margin-left: auto;
+        }
+
+        .other-user-message {
+            background-color: #8B4513;
+            align-self: flex-start;
+            color: #fff;
+            margin-right: auto;
+        }
+
         .form {
             width: 100%;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
+            justify-content: space-between;
+            padding: 10px 20px;
+            align-items: flex-end;
         }
 
         .input {
-            width: 100%;
+            width: 60%;
             padding: 10px;
             box-sizing: border-box;
-            margin-bottom: 10px;
+            border-radius: 5px;
+            margin-left: 6px;
         }
 
         .button {
             background-color: #78530e;
             color: #fff;
-            padding: 10px 20px;
+            padding: 8px 15px;
             border: none;
             cursor: pointer;
+            border-radius: 5px;
         }
 
         .footer {
@@ -169,106 +175,90 @@
                 <li><a href="chat.html">Chat</a></li>
             </ul>
             <div class="example-user">
-                <p>User: <span id="displayedUser"></span></p>
+                <p><span id="displayedUser"></span></p>
             </div>
         </nav>
     </header>
 
     <main class='main'>
         <div class="sidebar" id="sidebar">
-            <a href="#" onclick="changeConversation(0)">Conversation 1</a>
-            <a href="#" onclick="changeConversation(1)">Conversation 2</a>
-            <a href="#" onclick="changeConversation(2)">Conversation 3</a>
         </div>
         <div class="chat-container" id="chatContainer">
-            <!-- Chat messages will be dynamically added here -->
         </div>
-        <div class="form">
-            <input type="text" id="message" name="message" class="input" placeholder="Start Chat...">
-            <button onclick="sendMessage()" class="button">Send</button>
-        </div>
-        <script>
-            // Retrieve user from local storage on page load
-            const storedUser = localStorage.getItem('user');
-            if (storedUser) {
-                document.getElementById('displayedUser').innerText = storedUser;
-            }
-
-            // Predefined conversation loop
-            const conversations = [
-                [
-                    { user: 'User', message: 'Hi there!' },
-                    { user: 'Other User', message: 'Hello! How are you?' },
-                    { user: 'User', message: 'I\'m good, thanks. How about you?' },
-                    { user: 'Other User', message: 'I\'m doing well too.' },
-                    // Add more messages as needed
-                ],
-                [
-                    // Conversation 2 messages
-                ],
-                [
-                    // Conversation 3 messages
-                ]
-                // Add more conversations as needed
-            ];
-
-            let currentConversationIndex = 0;
-
-            function changeConversation(index) {
-                currentConversationIndex = index;
-                updateSidebar();
-            }
-
-            function updateSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const conversationsCount = conversations.length;
-
-                sidebar.innerHTML = '';
-                for (let i = 0; i < conversationsCount; i++) {
-                    const link = document.createElement('a');
-                    link.href = '#';
-                    link.textContent = `Conversation ${i + 1}`;
-                    link.onclick = () => changeConversation(i);
-                    sidebar.appendChild(link);
-                }
-            }
-
-            function renderMessages() {
-                const chatContainer = document.getElementById('chatContainer');
-                chatContainer.innerHTML = '';
-
-                const conversation = conversations[currentConversationIndex];
-                conversation.forEach(msg => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `chat-message ${msg.user === storedUser ? 'user-message' : 'other-user-message'}`;
-                    messageDiv.textContent = `${msg.user}: ${msg.message}`;
-                    chatContainer.appendChild(messageDiv);
-                });
-            }
-
-            function sendMessage() {
-                const messageInput = document.getElementById('message');
-                const messageText = messageInput.value.trim();
-
-                if (messageText !== '') {
-                    const conversation = conversations[currentConversationIndex];
-                    conversation.push({ user: storedUser, message: messageText });
-
-                    renderMessages();
-                    messageInput.value = ''; // Clear the input
-                }
-            }
-
-            // Initial rendering
-            updateSidebar();
-            renderMessages();
-        </script>
     </main>
+
+    <div class="form">
+        <input type="text" id="message" class="input" placeholder="Type your message...">
+        <button type="button" class="button" onclick="sendMessage()">Send</button>
+    </div>
 
     <footer class="footer">
         <p>Author: Jacqui Durney</p>
         <p><a href="https://github.com/jdurn3/startup.git">GitHub</a></p>
     </footer>
+
+    <script>
+        const storedUser = localStorage.getItem('user') || 'exampleUser';
+        document.getElementById('displayedUser').innerText = storedUser;
+
+        const conversations = [
+            [{ user: 'John', message: 'Hi there!' }],
+            [{ user: 'Alice', message: 'Hey! How are you?' }],
+            [{ user: 'Bob', message: 'Hello!' }],
+        ];
+
+        let currentConversationIndex = 0;
+
+        function changeConversation(index) {
+            currentConversationIndex = index;
+            renderMessages();
+        }
+
+        function updateSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.innerHTML = '';
+
+            for (let i = 0; i < conversations.length; i++) {
+                const link = document.createElement('a');
+                link.href = '#';
+                link.textContent = `Conversation ${i + 1}`;
+                link.onclick = function () {
+                    changeConversation(i);
+                    sidebar.appendChild(link);
+                };
+                sidebar.appendChild(link);
+            }
+        }
+
+        function renderMessages() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML = '';
+
+            const conversation = conversations[currentConversationIndex];
+            conversation.forEach(msg => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${msg.user === storedUser ? 'user-message' : 'other-user-message'}`;
+                messageDiv.textContent = `${msg.user}: ${msg.message}`;
+                chatContainer.appendChild(messageDiv);
+            });
+        }
+
+        function sendMessage() {
+            const messageInput = document.getElementById('message');
+            const messageText = messageInput.value.trim();
+
+            if (messageText !== '') {
+                const conversation = conversations[currentConversationIndex];
+                conversation.push({ user: storedUser, message: messageText });
+
+                renderMessages();
+                messageInput.value = '';
+            }
+        }
+
+        updateSidebar();
+        renderMessages();
+    </script>
 </body>
 
 </html>
