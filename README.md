@@ -66,3 +66,13 @@ For this deliverable I properly styled the application into its final appearance
 - Responsive to window resizing: The app looks great on different window sizes and devices. 
 - Application elements - Used appealing colors that matched the outdoor aesthetic of rock climbing. 
 - Application text content: Changed the fonts and size to emphasize key words. 
+
+<hr> 
+
+## JavaScript Deliverable
+For this deliverable I properly styled the application into its final appearance.
+
+- Login: handles the username and stores it in the localStorage API
+- User display: displays the user across pages by retrieving it from the localStorage API. 
+- Calender: handles the inpput for trip submissions. Stores and displays the data on a calender. 
+- Chat: handles and displays the input responses for the chat aspect of the website. 
