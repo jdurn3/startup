@@ -155,7 +155,6 @@
     </footer>
 
     <script>
-        // Retrieve user from local storage on page load
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             document.getElementById('displayedUser').innerText = storedUser;
@@ -164,11 +163,7 @@
         document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
-
-            // Store user in local storage
             localStorage.setItem('user', username);
-
-            // Display user
             document.getElementById('displayedUser').innerText = username;
         });
     </script>
