@@ -85,6 +85,6 @@ For this deliverable I added backend endpoints that receives trip sumbissions an
 
 - Node.js/Express HTTP service
 - Static middleware for frontend
-- Calls to third party endpoints: Rotates through different pictures of mountains.
+- Calls to third party endpoints: Rotates through different pictures on the side of the chat for styling. 
 - Backend service endpoints - Placeholders for login that stores the current user on the server. Endpoints for submitting a trip. 
 - Frontend calls service endpoints: I did this using the fetch function.
