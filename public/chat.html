@@ -256,6 +256,19 @@
             }
         }
 
+        function displayMountainPicture() {
+            const randomImageId = Math.floor(Math.random() * 1000) + 1;
+        
+            const containerEl = document.querySelector('#mountain-picture');
+        
+            const imgEl = document.createElement('img');
+            imgEl.classList.add('mountain-picture');
+            imgEl.src = `https://picsum.photos/id/${randomImageId}/800/600`;
+            imgEl.alt = 'Random Mountain';
+        
+            containerEl.appendChild(imgEl);
+        }
+
         updateSidebar();
         renderMessages();
     </script>

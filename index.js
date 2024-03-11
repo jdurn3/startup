@@ -32,16 +32,4 @@ app.listen(port, () => {
 });
 
 
-function updateTrip(response) {
-  console.log('Trip submitted successfully');
-
-  const event = {
-      title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
-      start: date,
-      end: date,
-      allDay: true,
-      backgroundColor: '#D2B48C',
-  };
-  $('#calendar').fullCalendar('renderEvent', event, true);
-};
 

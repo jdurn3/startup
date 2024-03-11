@@ -76,3 +76,15 @@ For this deliverable I properly styled the application into its final appearance
 - User display: displays the user across pages by retrieving it from the localStorage API. 
 - Calender: handles the inpput for trip submissions. Stores and displays the data on a calender. 
 - Chat: handles and displays the input responses for the chat aspect of the website. 
+
+<hr>
+
+## Service Deliverable 
+
+For this deliverable I added backend endpoints that receives trip sumbissions and displays them on a calendar. 
+
+- Node.js/Express HTTP service
+- Static middleware for frontend
+- Calls to third party endpoints: Rotates through different pictures of mountains.
+- Backend service endpoints - Placeholders for login that stores the current user on the server. Endpoints for submitting a trip. 
+- Frontend calls service endpoints: I did this using the fetch function.
