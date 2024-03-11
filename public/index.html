@@ -154,7 +154,19 @@
         <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
     </footer>
 
-    <script src = '/public/login.js'></script>
+    <script>
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            document.getElementById('displayedUser').innerText = storedUser;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            localStorage.setItem('user', username);
+            document.getElementById('displayedUser').innerText = username;
+        });
+    </script>
 </body>
 </html>
     

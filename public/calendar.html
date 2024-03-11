@@ -171,6 +171,9 @@
 <script> 
 $(document).ready(function () {
     const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            document.getElementById('displayedUser').innerText = storedUser;
+        }
 
     // Initialize the calendar
     $('#calendar').fullCalendar({
