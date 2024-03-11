@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimbCoord</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        
+        h1, h2 {
+            font-family: "Helvetica";
+        }
+
+        .header {
+            background-color: #e5c99f;
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .example-user {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            color: black;
+        }
+
+        .nav {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #78530e;
+        }
+
+        .nav h1 {
+            margin-right: auto;
+            font-size: 50px;
+        }
+
+        .nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            background-color: #e5c99f;
+            padding: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav ul li {
+            margin: 0 10px;
+        }
+
+        .nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 17px;
+        }
+
+        .main {
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #FDF8E3;
+        }
+
+        .form-container {
+            border: 2px solid #78530e;
+            padding: 20px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            width: 80%;
+        }
+        .footer {
+            background-color: #e5c99f;
+            color: #fff;
+            text-align: left;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        #calendar {
+            height: 100%;
+            background-color: #FDF8E3;
+            border-radius: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .fc-event {
+            border: none !important;
+        }
+
+        .fc-title {
+            color: #3E2723 !important;
+        } 
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
+</head>
+
+<body>
+<header class="header">
+    <nav class="nav">
+        <ul>
+            <h1>ClimbCoord</h1>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="calendar.html">Calendar</a></li>
+            <li><a href="chat.html">Chat</a></li>
+        </ul>
+        <div class="example-user">
+            <p><span id="displayedUser"></span></p>
+        </div>
+    </nav>
+</header>
+
+<main class="main">
+    <h1> Upcoming Trips</h1>
+    <div id="calendar"></div>
+
+    <section class="form-container">
+        <h2>Submit a Trip!</h2>
+
+        <form action="submit_trip.php" method="post" id="tripForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+
+            <label for="people">Number of People:</label>
+            <input type="number" id="people" name="people" min="1" required><br>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br>
+
+            <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty" required>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</main>
+
+<footer class="footer">
+    <p>Author: Jacqui Durney</p>
+    <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
+</footer>
+
+<script src = '/public/calendar.js'> </script>
+
+</body>
+</html>
