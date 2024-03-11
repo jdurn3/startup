@@ -1,6 +1,9 @@
-const storedUser = localStorage.getItem('user');
+// calendar.js
 
-function initializeCalendar() {
+document.addEventListener('DOMContentLoaded', function () {
+    const storedUser = localStorage.getItem('user');
+
+    // Initialize the calendar
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -11,46 +14,55 @@ function initializeCalendar() {
         eventLimit: true,
         events: []
     });
-}
 
-function submitTrip() {
-    const date = $('#date').val();
-    const people = $('#people').val();
-    const location = $('#location').val();
-    const difficulty = $('#difficulty').val();
+    // Event handler for form submission
+    const tripForm = document.getElementById('tripForm');
 
-    $.ajax({
-        url: '/api/submit-trip',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            date: date,
-            people: people,
-            location: location,
-            difficulty: difficulty
-        }),
-        success: function (response) {
-            console.log('Trip submitted successfully');
+    if (tripForm) {
+        tripForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
 
-            const event = {
-                title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
-                start: date,
-                end: date,
-                allDay: true,
-                backgroundColor: '#D2B48C',
-            };
-            $('#calendar').fullCalendar('renderEvent', event, true);
-        },
-        error: function (error) {
-            console.error('Error submitting trip:', error);
-        }
-    });
-}
+            const date = document.getElementById('date').value;
+            const people = document.getElementById('people').value;
+            const location = document.getElementById('location').value;
+            const difficulty = document.getElementById('difficulty').value;
 
-$(document).ready(function () {
-    initializeCalendar();
+    
+            try {
+                const response = await fetch('https://your-domain.com/api/submit-trip', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        date: date,
+                        people: people,
+                        location: location,
+                        difficulty: difficulty
+                    })
+                });
 
-    $('#submitBtn').click(function () {
-        submitTrip();
-    });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                console.log('Trip submitted successfully');
+
+                const eventObject = {
+                    title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
+                    start: date,
+                    end: date,
+                    allDay: true,
+                    backgroundColor: '#D2B48C',
+                };
+
+                $('#calendar').fullCalendar('renderEvent', eventObject, true);
+
+                tripForm.reset();
+            } catch (error) {
+                // Handle error
+                console.error('Error submitting trip:', error);
+            }
+        });
+    }
 });
