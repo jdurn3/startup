@@ -139,15 +139,22 @@
 
     <main class="main">
         <section class="section">
-            <h1>Welcome!</h1>
-            <p>Please login to see upcoming trips!</p>
-            <form action="welcome.html" method="post" class="form" id="loginForm">
-                <label for="username" class="label">Enter your name:</label>
-                <input type="text" id="username" name="username" required class="input">
-                <button type="submit" class="button">Login</button>
-            </form>
+          <h1>Welcome!</h1>
+          <p>Please login to see upcoming trips!</p>
+          <div id="loginControls">
+            <div class="input-group mb-3">
+              <span class="input-group-text">@</span>
+              <input class="form-control" type="text" id="userName" placeholder="your@email.com" />
+            </div>
+            <div class="input-group mb-3">
+              <span class="input-group-text">🔒</span>
+              <input class="form-control" type="password" id="userPassword" placeholder="password" />
+            </div>
+            <button type="button" class="btn btn-primary" onclick="loginUser()">Login</button>
+            <button type="button" class="btn btn-primary" onclick="createUser()">Create</button>
+          </div>
         </section>
-    </main>
+      </main>
 
     <footer class="footer">
         <p>Author: Jacqui Durney</p>
