@@ -162,16 +162,17 @@
         <p><a href="https://github.com/jdurn3/startup.git" class="footer">GitHub</a></p>
     </footer>
 
-    <script >
-    async function loginUser() {
-        await loginOrCreate(`/api/auth/login`);
-      }
-      
-      async function createUser() {
-        await loginOrCreate(`/api/auth/create`);
-      }
-      
-      async function loginOrCreate(endpoint) {
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        async function loginUser() {
+            await loginOrCreate(`/api/auth/login`);
+        }
+
+        async function createUser() {
+            await loginOrCreate(`/api/auth/create`);
+        }
+
+        async function loginOrCreate(endpoint) {
             const userName = document.querySelector('#userName')?.value;
             const password = document.querySelector('#userPassword')?.value;
             const response = await fetch(endpoint, {
@@ -186,8 +187,6 @@
                 localStorage.setItem('userName', userName);
                 document.querySelector('#loginMessage').textContent = `Logged in as ${userName}`;
                 document.getElementById('displayedUser').textContent = userName; // Update displayed username
-                setDisplay('loginControls', 'none');
-                setDisplay('playControls', 'block');
             } else {
                 const body = await response.json();
                 const modalEl = document.querySelector('#msgModal');
@@ -196,23 +195,20 @@
                 msgModal.show();
             }
         }
-      
-      async function getUser(email) {
-        let scores = [];
-        // See if we have a user with the given email.
-        const response = await fetch(`/api/user/${email}`);
-        if (response.status === 200) {
-          return response.json();
+
+        async function getUser(email) {
+            // See if we have a user with the given email.
+            const response = await fetch(`/api/user/${email}`);
+            if (response.status === 200) {
+                return response.json();
+            }
+
+            return null;
         }
-      
-        return null;
-      }
+    });
     </script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-      crossorigin="anonymous"
-    ></script>
-</body>
-</html>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    </body>
+    </html>
