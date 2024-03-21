@@ -186,7 +186,7 @@
             if (response.ok) {
                 localStorage.setItem('userName', userName);
                 document.querySelector('#loginMessage').textContent = `Logged in as ${userName}`;
-                document.getElementById('displayedUser').textContent = userName; // Update displayed username
+                document.getElementById('displayedUser').textContent = userName;
             } else {
                 const body = await response.json();
                 const modalEl = document.querySelector('#msgModal');
