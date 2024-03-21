@@ -170,10 +170,11 @@
 
 <script> 
     $(document).ready(function () {
+
         // Check if the user is logged in
         const isLoggedIn = localStorage.getItem('userName') !== null;
     
-        // Toggle visibility of the submit trip section based on login status
+        // Toggle visibility of the submit trip section based on if they're logged in 
         const submitTripSection = document.getElementById('submitTripSection');
         if (submitTripSection) {
             submitTripSection.style.display = isLoggedIn ? 'block' : 'none';

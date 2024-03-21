@@ -111,6 +111,7 @@ app.use((_req, res) => {
 
 // setAuthCookie in the HTTP response
 function setAuthCookie(res, authToken) {
+  const authCookieName = 'token';
   res.cookie(authCookieName, authToken, {
     secure: true,
     httpOnly: true,
