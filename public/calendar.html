@@ -175,7 +175,7 @@
         const isLoggedIn = localStorage.getItem('userName') !== null;
     
         // Toggle visibility of the submit trip section based on if they're logged in 
-        const submitTripSection = document.getElementById('submitTripSection');
+        const submitTripSection = document.querySelector('.form-container');
         if (submitTripSection) {
             submitTripSection.style.display = isLoggedIn ? 'block' : 'none';
         }
