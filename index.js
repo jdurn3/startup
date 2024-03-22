@@ -5,7 +5,7 @@ const app = express();
 const { getUser, createUser, getUserByToken } = require('./database');
 
 // The service port may be set on the command line
-const port = process.argv.length > 2 ? process.argv[2] : 3000;
+const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());
@@ -90,6 +90,7 @@ var secureApiRouter = express.Router();
 apiRouter.use(secureApiRouter);
 
 secureApiRouter.use(async (req, res, next) => {
+  const authCookieName = 'token';
   authToken = req.cookies[authCookieName];
   const user = await getUserByToken(authToken);
   if (user) {

@@ -92,9 +92,9 @@ For this deliverable I added backend endpoints that receives trip sumbissions an
 <hr>
 
 ## Login Deliverable 
-For this deliverable I associate the votes with the logged in user. I stored the votes in the database.
+For this deliverable I created a database to store users login information.
 
 - Created MongoDB Atlas database that stores login information.
 - User registration - Creates a new account in the database.
 - existing user - Stores trips under the same user.
-- Restricts functionality - The submit a trip box will not be avaliable on the calendar page until you are logged in. Users not logged in can only view trips, not submit them. 
+- Restricts functionality - The submit a trip box will not be avaliable on the calendar page until you are logged in. Users not logged cannot submit a trip. 
