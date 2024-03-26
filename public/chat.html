@@ -219,84 +219,36 @@
         if (storedUser) {
             document.getElementById('displayedUser').innerText = storedUser;
         }
-        document.getElementById('displayedUser').innerText = storedUser;
 
-        const conversations = [
-            [{ user: 'John', message: 'Hi there!' }],
-            [{ user: 'Alice', message: 'Hey! How are you?' }],
-            [{ user: 'Bob', message: 'Hello!' }],
-        ];
+        const ws = new WebSocket('ws://your-server-domain-or-ip-address:3000'); // Change the URL to match your server
 
-        let currentConversationIndex = 0;
+        ws.onopen = function () {
+            console.log('WebSocket connection established.');
+        };
 
-        function changeConversation(index) {
-            currentConversationIndex = index;
-            renderMessages();
-        }
+        ws.onerror = function (error) {
+            console.error('WebSocket error:', error);
+        };
 
-        function updateSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.innerHTML = '';
-
-            for (let i = 0; i < conversations.length; i++) {
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = `Conversation ${i + 1}`;
-                link.onclick = function () {
-                    changeConversation(i);
-                    sidebar.appendChild(link);
-                };
-                sidebar.appendChild(link);
-            }
-        }
-
-        function renderMessages() {
+        ws.onmessage = function (event) {
+            const message = JSON.parse(event.data);
             const chatContainer = document.getElementById('chatContainer');
-            chatContainer.innerHTML = '';
-
-            const conversation = conversations[currentConversationIndex];
-            conversation.forEach(msg => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `chat-message ${msg.user === storedUser ? 'user-message' : 'other-user-message'}`;
-                messageDiv.textContent = `${msg.user}: ${msg.message}`;
-                chatContainer.appendChild(messageDiv);
-            });
-        }
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${message.user === storedUser ? 'user-message' : 'other-user-message'}`;
+            messageDiv.textContent = `${message.user}: ${message.message}`;
+            chatContainer.appendChild(messageDiv);
+        };
 
         function sendMessage() {
             const messageInput = document.getElementById('message');
             const messageText = messageInput.value.trim();
 
             if (messageText !== '') {
-                const conversation = conversations[currentConversationIndex];
-                conversation.push({ user: storedUser, message: messageText });
-
-                renderMessages();
-                messageInput.value = ''; 
+                const message = { user: storedUser, message: messageText };
+                ws.send(JSON.stringify(message));
+                messageInput.value = '';
             }
         }
-
-        function displayMountainPicture() {
-            const randomImageId = Math.floor(Math.random() * 1000) + 1;
-
-            const containerEl = document.querySelector('#mountain-picture');
-            containerEl.innerHTML = ''; // Clear previous images
-
-            const imgEl = document.createElement('img');
-            imgEl.classList.add('mountain-picture');
-            imgEl.src = `https://picsum.photos/id/${randomImageId}/800/600`;
-            imgEl.alt = 'Random Mountain';
-
-            containerEl.appendChild(imgEl);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            displayMountainPicture();
-        });
-
-
-        updateSidebar();
-        renderMessages();
     </script>
 </body>
 

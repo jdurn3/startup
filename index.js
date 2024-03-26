@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
 const { getUser, createUser, getUserByToken } = require('./database');
+const { peerProxy } = require('./peerProxy.js');
 
 // The service port may be set on the command line
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -120,5 +121,9 @@ function setAuthCookie(res, authToken) {
   });
 }
 
+const httpService = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
 
+peerProxy(httpService);
 
