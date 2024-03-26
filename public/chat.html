@@ -220,7 +220,7 @@
             document.getElementById('displayedUser').innerText = storedUser;
         }
 
-        const ws = new WebSocket('ws://your-server-domain-or-ip-address:3000'); // Change the URL to match your server
+        const ws = new WebSocket('ws://localhost:4000'); // Change the URL to match your server
 
         ws.onopen = function () {
             console.log('WebSocket connection established.');
