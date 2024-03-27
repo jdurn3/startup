@@ -215,13 +215,16 @@
     </footer>
 
     <script>
+        // Retrieve stored user from localStorage
         const storedUser = localStorage.getItem('userName');
         if (storedUser) {
             document.getElementById('displayedUser').innerText = storedUser;
         }
 
-        const ws = new WebSocket('ws://localhost:4000'); // Change the URL to match your server
+        // Establish WebSocket connection
+        const ws = new WebSocket('ws://localhost:4000');
 
+        // WebSocket event handlers
         ws.onopen = function () {
             console.log('WebSocket connection established.');
         };
@@ -231,7 +234,10 @@
         };
 
         ws.onmessage = function (event) {
+            // Parse incoming message
             const message = JSON.parse(event.data);
+
+            // Append message to chat container
             const chatContainer = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
             messageDiv.className = `chat-message ${message.user === storedUser ? 'user-message' : 'other-user-message'}`;
@@ -239,16 +245,41 @@
             chatContainer.appendChild(messageDiv);
         };
 
+        // Function to send message
         function sendMessage() {
             const messageInput = document.getElementById('message');
             const messageText = messageInput.value.trim();
 
             if (messageText !== '') {
+                // Create message object
                 const message = { user: storedUser, message: messageText };
+                console.log(message)
+
+                // Send message over WebSocket
                 ws.send(JSON.stringify(message));
+
+                // Clear message input
                 messageInput.value = '';
             }
         }
+
+        function displayMountainPicture() {
+            const randomImageId = Math.floor(Math.random() * 1000) + 1;
+
+            const containerEl = document.querySelector('#mountain-picture');
+            containerEl.innerHTML = ''; // Clear previous images
+
+            const imgEl = document.createElement('img');
+            imgEl.classList.add('mountain-picture');
+            imgEl.src = `https://picsum.photos/id/${randomImageId}/800/600`;
+            imgEl.alt = 'Random Mountain';
+
+            containerEl.appendChild(imgEl);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            displayMountainPicture();
+        });
     </script>
 </body>
 
