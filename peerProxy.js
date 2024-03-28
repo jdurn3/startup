@@ -23,7 +23,8 @@ function peerProxy(httpServer) {
     ws.on('message', function message(data) {
       connections.forEach((c) => {
         if (c.id !== connection.id) {
-          c.ws.send(data);
+          c.ws.send(JSON.stringify(JSON.parse(data)));
+          //c.ws.send(data); // BAD DON"T WORK
         }
       });
     });
