@@ -98,3 +98,14 @@ For this deliverable I created a database to store users login information.
 - User registration - Creates a new account in the database.
 - existing user - Stores trips under the same user.
 - Restricts functionality - The submit a trip box will not be avaliable on the calendar page until you are logged in. Users not logged cannot submit a trip. 
+
+<hr> 
+
+## WebSocket
+
+For this deliverable I used webSocket to create a real time chat between users!
+
+- Backend listens for WebSocket connection.
+- Frontend makes WebSocket connection in the chat page.
+- Data sent over WebSocket connection - done!
+- WebSocket data displayed as a chat between all users.
