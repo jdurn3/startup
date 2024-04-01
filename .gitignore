@@ -10,3 +10,5 @@ public/node_modules
 node_modules
 dbConfig.json
 node_modules
+package-lock.json
+package.json
