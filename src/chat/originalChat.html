@@ -1,19 +1,28 @@
-import React, { useEffect } from 'react';
-import './chat.css'
+<!DOCTYPE html>
+<html lang="en">
 
-function Chat() {
-    useEffect(() => {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClimbCoord</title>
+</head>
+
+<body>
+    <script>
         const storedUser = localStorage.getItem('userName');
+
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
         const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
         ws.onmessage = function(event) {
+            console.log("success")
             const message = JSON.parse(event.data);
+            console.log(message);
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML += `<div class="message-container">
                                             <div class="user-name">${message.user}</div>
                                             <div class="chat-message ${message.user === storedUser ? 'user-message' : 'other-user-message'}">${message.message}</div>
-                                        </div>`;
+                                        </div>`;        
         };
 
         function sendMessage() {
@@ -29,6 +38,7 @@ function Chat() {
                                                 <div class="user-name">${storedUser}</div>
                                                 <div class="chat-message user-message">${messageText}</div>
                                             </div>`;
+
 
                 messageInput.value = '';
             }
@@ -48,26 +58,31 @@ function Chat() {
             containerEl.appendChild(imgEl);
         }
 
-        displayMountainPicture();
-    }, []);
+        document.addEventListener('DOMContentLoaded', function () {
+            if (storedUser) {
+                document.getElementById('displayedUser').innerText = storedUser;
+            }
 
-    return (
-        <body>
-            <main className='main'>
-                <div className="chat-container" id="chatContainer">
-                    <div id="chatMessages"></div>
-                </div>
-                <div className="mountain-container">
-                    <div id="mountain-picture"></div>
-                </div>
-            </main>
+            displayMountainPicture();
+        });
+    </script>
 
-            <div className="form">
-                <input type="text" id="message" className="input" placeholder="Type your message..." />
-                <button type="button" className="button" onClick={sendMessage}>Send</button>
-            </div>
-        </body>
-    );
-}
+    <main class='main'>
+        <div class="chat-container" id="chatContainer">
+            <div id="chatMessages"></div>
+        </div>
+        <div class="mountain-container">
+            <div id="mountain-picture"></div>
+        </div>
+    </main>
+   
+    <div class="form">
+        <input type="text" id="message" class="input" placeholder="Type your message...">
+        <button type="button" class="button" onclick="sendMessage()">Send</button>
+    
+    </div>
+    
+    
+</body>
 
-export default Chat;
+</html>
