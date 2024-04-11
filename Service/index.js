@@ -6,7 +6,7 @@ const { getUser, createUser, getUserByToken } = require('./database.js');
 const { peerProxy } = require('./peerProxy.js');
 
 // The service port may be set on the command line
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
+const port = process.argv.length > 2 ? process.argv[2] : 4001;
 
 // JSON body parsing using built-in middleware
 app.use(express.json());

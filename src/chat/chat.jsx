@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './chat.css';
 
 export function Chat() {
+    const [ws, setWs] = useState(null); // State to hold WebSocket object
+
     useEffect(() => {
         const storedUser = localStorage.getItem('userName');
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
-        const ws = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+        setWs(socket); // Set WebSocket object in state
 
-        ws.onmessage = function(event) {
+        socket.onmessage = function(event) {
             const message = JSON.parse(event.data);
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML += `<div class="message-container">
@@ -16,40 +19,44 @@ export function Chat() {
                                         </div>`;
         };
 
-        function sendMessage() {
-            const messageInput = document.getElementById('message');
-            const messageText = messageInput.value.trim();
-
-            if (messageText !== '') {
-                const message = { user: storedUser, message: messageText };
-                ws.send(JSON.stringify(message));
-
-                const chatMessages = document.getElementById('chatMessages');
-                chatMessages.innerHTML += `<div class="message-container">
-                                                <div class="user-name">${storedUser}</div>
-                                                <div class="chat-message user-message">${messageText}</div>
-                                            </div>`;
-
-                messageInput.value = '';
-            }
-        }
-
-        function displayMountainPicture() {
-            const randomImageId = Math.floor(Math.random() * 1000) + 1;
-
-            const containerEl = document.querySelector('#mountain-picture');
-            containerEl.innerHTML = '';
-
-            const imgEl = document.createElement('img');
-            imgEl.classList.add('mountain-picture');
-            imgEl.src = `https://picsum.photos/id/${randomImageId}/800/600`;
-            imgEl.alt = 'Random Mountain';
-
-            containerEl.appendChild(imgEl);
-        }
-
         displayMountainPicture();
     }, []);
+
+    function sendMessage() {
+        const storedUser = localStorage.getItem('userName');
+        const messageInput = document.getElementById('message');
+        const messageText = messageInput.value.trim();
+    
+        if (messageText !== '' && ws && ws.readyState === WebSocket.OPEN) {
+            const message = { user: storedUser, message: messageText };
+            ws.send(JSON.stringify(message));
+    
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML += `<div class="message-container">
+                                            <div class="user-name">${storedUser}</div>
+                                            <div class="chat-message user-message">${messageText}</div>
+                                        </div>`;
+    
+            messageInput.value = '';
+        } else {
+            console.error('WebSocket is not in the OPEN state.');
+        }
+    }
+    
+
+    function displayMountainPicture() {
+        const randomImageId = Math.floor(Math.random() * 1000) + 1;
+
+        const containerEl = document.querySelector('#mountain-picture');
+        containerEl.innerHTML = '';
+
+        const imgEl = document.createElement('img');
+        imgEl.classList.add('mountain-picture');
+        imgEl.src = `https://picsum.photos/id/${randomImageId}/800/600`;
+        imgEl.alt = 'Random Mountain';
+
+        containerEl.appendChild(imgEl);
+    }
 
     return (
         <div>
@@ -69,4 +76,3 @@ export function Chat() {
         </div>
     );
 }
-

@@ -1,95 +1,83 @@
 import React, { useEffect } from 'react';
-//import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
-import FullCalendar from '@fullcalendar/react'
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import 'moment';
 import './calendar.css';
 
 export function Calendar() {
   useEffect(() => {
-    // Check if the user is logged in
-    const isLoggedIn = localStorage.getItem('userName') !== null;
-
-    // Toggle visibility of the submit trip section based on if they're logged in
-    const submitTripSection = document.querySelector('.form-container');
-    if (submitTripSection) {
-      submitTripSection.style.display = isLoggedIn ? 'block' : 'none';
-    }
-
-    // Display the user's name
-    const storedUser = localStorage.getItem('userName');
-    if (storedUser) {
-      document.getElementById('displayedUser').innerText = storedUser;
-    }
-
-    // Initialize the calendar
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      defaultView: 'month',
-      eventLimit: true,
-      events: []
-    });
-
-    // Event handler for form submission
     const tripForm = document.getElementById('tripForm');
 
-    if (tripForm) {
-      tripForm.addEventListener('submit', async function (event) {
-        event.preventDefault();
+    const handleFormSubmit = async (event) => {
+      event.preventDefault();
+      const storedUser = localStorage.getItem('userName');
+      const date = document.getElementById('date').value;
+      const people = document.getElementById('people').value;
+      const location = document.getElementById('location').value;
+      const difficulty = document.getElementById('difficulty').value;
 
-        const date = document.getElementById('date').value;
-        const people = document.getElementById('people').value;
-        const location = document.getElementById('location').value;
-        const difficulty = document.getElementById('difficulty').value;
+      try {
+        const response = await fetch('/api/submit-trip', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            date: date,
+            people: people,
+            location: location,
+            difficulty: difficulty
+          })
+        });
 
-        try {
-          const response = await fetch('/api/submit-trip', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              date: date,
-              people: people,
-              location: location,
-              difficulty: difficulty
-            })
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-
-          console.log('Trip submitted successfully');
-
-          const eventObject = {
-            title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
-            start: date,
-            end: date,
-            allDay: true,
-            backgroundColor: '#D2B48C',
-          };
-
-          $('#calendar').fullCalendar('renderEvent', eventObject, true);
-
-          tripForm.reset();
-        } catch (error) {
-          // Handle error
-          console.error('Error submitting trip:', error);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      });
+
+        console.log('Trip submitted successfully');
+      
+        const newEvent = {
+          title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
+          start: date,
+          end: date,
+          allDay: true,
+          backgroundColor: '#D2B48C',
+        };
+
+        // Update events state with new event
+        setEvents(prevEvents => [...prevEvents, newEvent]);
+
+        tripForm.reset();
+      } catch (error) {
+        console.error('Error submitting trip:', error);
+      }
+    };
+
+    if (tripForm) {
+      tripForm.addEventListener('submit', handleFormSubmit);
     }
+
+    return () => {
+      if (tripForm) {
+        tripForm.removeEventListener('submit', handleFormSubmit);
+      }
+    };
   }, []);
+
+  const [events, setEvents] = React.useState([]);
 
   return (
     <div>
       <main className="main">
         <h1> Upcoming Trips</h1>
-        <div id="calendar"></div>
+        <div>
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView='dayGridMonth'
+            eventContent={renderEventContent}
+            events={events} // Pass events array to FullCalendar component
+          />
+        </div>
 
         <section className="form-container">
           <h2>Submit a Trip!</h2>
@@ -119,3 +107,12 @@ export function Calendar() {
   );
 }
 
+// Custom render function
+function renderEventContent(eventInfo) {
+  return (
+    <>
+      <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i>
+    </>
+  );
+}

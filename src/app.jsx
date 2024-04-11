@@ -17,7 +17,7 @@ function App() {
         <header className='container-fluid'>
           <nav className='navbar fixed-top navbar-dark'>
             <div className='navbar-brand'>
-              Simon<sup>&reg;</sup>
+              ClimbCoord<sup>&reg;</sup>
             </div>
             <menu className='navbar-nav'>
               <li className='nav-item'>

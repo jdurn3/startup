@@ -1,8 +1,9 @@
 import React from 'react';
 import './login.css'
+import { AuthState } from './authState';
 
 
-export function Login() {
+export function Login(props) {
     async function loginUser() {
         await loginOrCreate(`/api/auth/login`);
     }
@@ -25,7 +26,8 @@ export function Login() {
         if (response.ok) {
             localStorage.setItem('userName', userName);
             document.querySelector('#loginMessage').textContent = `Logged in as ${userName}`;
-            document.getElementById('displayedUser').textContent = userName;
+            //document.getElementById('displayedUser').textContent = userName;
+            props.onAuthChange(userName, AuthState.Authenticated);
         }
     }
 
