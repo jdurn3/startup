@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import './chat.css'
+import './chat.css';
 
-function Chat() {
+export function Chat() {
     useEffect(() => {
         const storedUser = localStorage.getItem('userName');
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
@@ -52,7 +52,7 @@ function Chat() {
     }, []);
 
     return (
-        <body>
+        <div>
             <main className='main'>
                 <div className="chat-container" id="chatContainer">
                     <div id="chatMessages"></div>
@@ -66,8 +66,7 @@ function Chat() {
                 <input type="text" id="message" className="input" placeholder="Type your message..." />
                 <button type="button" className="button" onClick={sendMessage}>Send</button>
             </div>
-        </body>
+        </div>
     );
 }
 
-export default Chat;

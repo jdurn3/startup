@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
-import 'fullcalendar';
+import FullCalendar from '@fullcalendar/react'
 import 'moment';
-import 'fullcalendar/dist/fullcalendar.min.css';
 import './calendar.css';
 
-function Calendar() {
+export function Calendar() {
   useEffect(() => {
     // Check if the user is logged in
     const isLoggedIn = localStorage.getItem('userName') !== null;
@@ -120,4 +119,3 @@ function Calendar() {
   );
 }
 
-export default Calendar;

@@ -2,7 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
-const { getUser, createUser, getUserByToken } = require('../database.js');
+const { getUser, createUser, getUserByToken } = require('./database.js');
 const { peerProxy } = require('./peerProxy.js');
 
 // The service port may be set on the command line
