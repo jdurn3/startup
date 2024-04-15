@@ -2,7 +2,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const app = express();
-const { getUser, createUser, getUserByToken } = require('./database.js');
+const { getUser, createUser, getUserByToken, getAllTrips, addTrip } = require('./database.js');
 const { peerProxy } = require('./peerProxy.js');
 
 // The service port may be set on the command line
@@ -25,12 +25,34 @@ var apiRouter = express.Router();
 app.use(`/api`, apiRouter);
 
 // SubmitTrip
-app.post('/api/submit-trip', (req, res) => {
+app.post('/api/submit-trip', async (req, res) => {
   const tripData = req.body;
-  console.log('Received trip data:', tripData);
-  res.json({ message: 'Trip submitted successfully' });
+
+  try {
+    // Call addTrip to insert the submitted trip data into the database
+    const insertedId = await addTrip(tripData);
+    
+    console.log('Trip submitted successfully:', tripData);
+    res.json({ message: 'Trip submitted successfully', insertedId });
+  } catch (error) {
+    console.error('Error submitting trip:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
+apiRouter.get('/trips', async (req, res) => {
+  try {
+    // Fetch all trips from the database
+    const trips = await getAllTrips();
+
+    // Send the list of trips as JSON response
+    res.json(trips);
+  } catch (error) {
+    console.error('Error fetching all trips:', error);
+    // Send an error response if fetching trips fails
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Return the application's default page if the path is unknown
 app.use((_req, res) => {

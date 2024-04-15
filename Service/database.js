@@ -7,6 +7,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('climbcoord');
 const userCollection = db.collection('user');
+const tripsCollection = db.collection('trips');
 
 
 // This will asynchronously test the connection and exit the process if it fails
@@ -17,6 +18,26 @@ const userCollection = db.collection('user');
   console.log(`Unable to connect to database with ${url} because ${ex.message}`);
   process.exit(1);
 });
+
+async function getAllTrips() {
+  try {
+    const trips = await tripsCollection.find({}).toArray();
+    return trips;
+  } catch (error) {
+    console.error('Error fetching all trips:', error);
+    throw error;
+  }
+}
+
+async function addTrip(tripData) {
+  try {
+    const result = await tripsCollection.insertOne(tripData);
+    return result.insertedId; // Return the ID of the inserted document
+  } catch (error) {
+    console.error('Error adding trip:', error);
+    throw error;
+  }
+}
 
 function getUser(email) {
   return userCollection.findOne({ email: email });
@@ -43,5 +64,7 @@ async function createUser(email, password) {
 module.exports = {
     getUser,
     createUser,
-    getUserByToken
+    getUserByToken, 
+    getAllTrips,
+    addTrip
   };

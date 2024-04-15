@@ -86,7 +86,7 @@ For this deliverable I added backend endpoints that receives trip sumbissions an
 - Node.js/Express HTTP service
 - Static middleware for frontend
 - Calls to third party endpoints: Rotates through different pictures on the side of the chat for styling. 
-- Backend service endpoints - Endpoints for submitting a trip. 
+- Backend service endpoints - Endpoints for submitting and fetching a trip. 
 - Frontend calls service endpoints: I did this using the fetch function.
 
 <hr>

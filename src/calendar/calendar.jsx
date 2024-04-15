@@ -1,70 +1,85 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import 'moment';
 import './calendar.css';
 
 export function Calendar() {
+  const [events, setEvents] = useState([]);
+
   useEffect(() => {
-    const tripForm = document.getElementById('tripForm');
-
-    const handleFormSubmit = async (event) => {
-      event.preventDefault();
-      const storedUser = localStorage.getItem('userName');
-      const date = document.getElementById('date').value;
-      const people = document.getElementById('people').value;
-      const location = document.getElementById('location').value;
-      const difficulty = document.getElementById('difficulty').value;
-
+    async function fetchTrips() {
       try {
-        const response = await fetch('/api/submit-trip', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            date: date,
-            people: people,
-            location: location,
-            difficulty: difficulty
-          })
-        });
-
+        const response = await fetch('/api/trips'); // Adjust the endpoint URL as per your API
+        console.log("wahoo")
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+        const trips = await response.json();
 
-        console.log('Trip submitted successfully');
-      
-        const newEvent = {
-          title: `User: ${storedUser}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
-          start: date,
-          end: date,
+        // Format the retrieved trips to match FullCalendar event format
+        const formattedEvents = trips.map(trip => ({
+          title: `User: ${trip.userName}\nLocation: ${trip.location}\nDifficulty: ${trip.difficulty}\nPeople: ${trip.people}`,
+          start: trip.date,
+          end: trip.date,
           allDay: true,
           backgroundColor: '#D2B48C',
-        };
+        }));
 
-        // Update events state with new event
-        setEvents(prevEvents => [...prevEvents, newEvent]);
-
-        tripForm.reset();
+        setEvents(formattedEvents);
       } catch (error) {
-        console.error('Error submitting trip:', error);
+        console.error('Error fetching trips:', error);
       }
-    };
-
-    if (tripForm) {
-      tripForm.addEventListener('submit', handleFormSubmit);
     }
 
-    return () => {
-      if (tripForm) {
-        tripForm.removeEventListener('submit', handleFormSubmit);
-      }
-    };
+    fetchTrips();
   }, []);
 
-  const [events, setEvents] = React.useState([]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const tripForm = event.target;
+    const date = tripForm.date.value;
+    const people = tripForm.people.value;
+    const location = tripForm.location.value;
+    const difficulty = tripForm.difficulty.value;
+
+    try {
+      const response = await fetch('/api/submit-trip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          date: date,
+          people: people,
+          location: location,
+          difficulty: difficulty
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      console.log('Trip submitted successfully');
+
+      // Add the newly submitted trip to the calendar
+      const newEvent = {
+        title: `User: ${localStorage.getItem('userName')}\nLocation: ${location}\nDifficulty: ${difficulty}\nPeople: ${people}`,
+        start: date,
+        end: date,
+        allDay: true,
+        backgroundColor: '#D2B48C',
+      };
+
+      // Update events state with new event
+      setEvents(prevEvents => [...prevEvents, newEvent]);
+
+      tripForm.reset();
+    } catch (error) {
+      console.error('Error submitting trip:', error);
+    }
+  };
 
   return (
     <div>
@@ -79,10 +94,10 @@ export function Calendar() {
           />
         </div>
 
+        {/* Submission form */}
         <section className="form-container">
           <h2>Submit a Trip!</h2>
-
-          <form action="submit_trip.php" method="post" id="tripForm">
+          <form onSubmit={handleSubmit} id="tripForm">
             <label htmlFor="date">Date:</label>
             <input type="date" id="date" name="date" required /><br />
 
